@@ -29,5 +29,8 @@ repositories {
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
 	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-aop')
+	compile('org.springframework.retry:spring-retry')
+	compile group: 'commons-lang', name: 'commons-lang', version: '2.6'
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }

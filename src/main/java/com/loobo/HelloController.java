@@ -12,31 +12,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloController {
 
     @Autowired
-    private BuildRepository buildRepository;
+    private HelloService helloService;
 
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public HttpEntity hello() throws Exception {
-
-        loadAndSave();
+        helloService.loadAndSave();
         return ResponseEntity.ok().build();
-    }
-
-    private void loadAndSave() throws InterruptedException {
-        Build one = buildRepository.findOne("584e8a848718b28937a45aac");
-        one.setAge(one.getAge() + 1);
-        try {
-            buildRepository.save(one);
-        } catch (org.springframework.dao.OptimisticLockingFailureException e) {
-            loadAndSave();
-        }
     }
 
     @RequestMapping(value = "/hello1", method = RequestMethod.GET)
     public HttpEntity hello1() throws Exception {
-        Build one = buildRepository.findOne("584e8a848718b28937a45aac");
-        one.setAge(one.getAge() + 2);
-
-        buildRepository.save(one);
+        helloService.save1();
         return ResponseEntity.ok().build();
     }
 }
