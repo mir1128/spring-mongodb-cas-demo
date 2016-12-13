@@ -11,7 +11,7 @@ public class HelloService {
     @Autowired
     private BuildRepository buildRepository;
 
-    @Retryable(value = org.springframework.dao.OptimisticLockingFailureException.class, maxAttempts = 3)
+    @Retryable(value = org.springframework.dao.OptimisticLockingFailureException.class, maxAttempts = 1)
     public void loadAndSave() throws InterruptedException {
         Build one = buildRepository.findOne("584e8a848718b28937a45aac");
         one.setAge(one.getAge() + 1);
