@@ -1,6 +1,7 @@
 package com.loobo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +10,7 @@ public class HelloService {
 
     @Autowired
     private BuildRepository buildRepository;
-    
+
     @Retryable(value = org.springframework.dao.OptimisticLockingFailureException.class, maxAttempts = 3)
     public void loadAndSave() throws InterruptedException {
         Build one = buildRepository.findOne("584e8a848718b28937a45aac");
@@ -21,6 +22,11 @@ public class HelloService {
 
         System.out.println("save now.");
         buildRepository.save(one);
+    }
+
+    @Recover
+    public void recover(Exception e) {
+        System.out.println("Recover=" + e);
     }
 
     public void save1() {
